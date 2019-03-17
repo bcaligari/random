@@ -22,7 +22,11 @@ writer : writer.c
 reader : reader.c
 	$(CC) $(CFLAGS) -o reader reader.c
 
+memeater : memeater.c
+	$(CC) $(CFLAGS) -o memeater memeater.c
+
 clean :
 	rm -f *.o core.* \
 	orphaniser zombiemaker forkbomber segfaulter \
-	writer reader
+	writer reader \
+	memeater

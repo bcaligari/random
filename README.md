@@ -6,6 +6,7 @@
 * `orphaniser` - orphan some child processes and log their reparenting
 * `forkbomber` - create a number of children or fork until error
 * `segfaulter` - segfaults
+* `memeater` - eats memory (allocates and zero fills blocks until killed or sytem barfs)
 
 ## Notes
 
