@@ -65,12 +65,14 @@ int meat(int bs, int interval)
 		bs >> 20,
 		interval
 	);
+	fflush(NULL);
 	for (;;) {
 		total += bs;
 		printf("%d: Allocating total of %ld bytes (%ld MiB)\n",
-				(int) getpid(),
-				total,
-				total >> 20);
+			(int) getpid(),
+			total,
+			total >> 20);
+		fflush(NULL);
 		ptr = malloc((size_t) bs);
 		if (ptr != NULL)
        			memset(ptr, 0, bs);

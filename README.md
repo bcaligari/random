@@ -2,11 +2,11 @@
 
 ## Utilities
 
-* `zombiemaker` - create a number of zombies
-* `orphaniser` - orphan some child processes and log their reparenting
-* `forkbomber` - create a number of children or fork until error
-* `segfaulter` - segfaults
-* `memeater` - eats memory (allocates and zero fills blocks until killed or sytem barfs)
+* `./misc/zombiemaker` - create a number of zombies
+* `./misc/orphaniser` - orphan some child processes and log their reparenting
+* `./misc/forkbomber` - create a number of children or fork until error
+* `./misc/segfaulter` - segfaults
+* `./misc/memeater` - eats memory (allocates and zero fills blocks until killed or sytem barfs)
 
 ## Notes
 
