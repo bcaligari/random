@@ -1,7 +1,7 @@
 FROM busybox
 
-COPY * /usr/local/bin/
+COPY memeater-static /opt/memeater/bin/memeater
 
-ENTRYPOINT [ "/usr/local/bin/memeater" ]
+ENTRYPOINT [ "/opt/memeater/bin/memeater" ]
 
 CMD [ ]

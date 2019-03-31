@@ -6,7 +6,7 @@
 * `./misc/orphaniser` - orphan some child processes and log their reparenting
 * `./misc/forkbomber` - create a number of children or fork until error
 * `./misc/segfaulter` - segfaults
-* `./misc/memeater` - eats memory (allocates and zero fills blocks until killed or sytem barfs)
+* `./memeater/*` - eats memory - binary, static, container, k8s pod
 
 ## Notes
 

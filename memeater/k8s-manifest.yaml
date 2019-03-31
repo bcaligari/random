@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: memeater
+spec:
+  shareProcessNamespace: true
+  containers:
+  - name: memeater
+    image: bcaligari/memeater
+    volumeMounts:
+    - name: logspace
+      mountPath: /opt/memeater/log
+    command: ["/opt/memeater/bin/memeater"]
+    args: ["-i", "10", "-s", "16777216", "-f", "/opt/memeater/log/memeater.log"]
+    resources:
+      limits:
+        memory: 128Mi
+  - name: sideshell
+    image: alpine
+    command: ["/bin/sh"]
+    volumeMounts:
+    - name: logspace
+      mountPath: /opt/memeater/log
+    tty: true
+    stdin: true
+    lifecycle:
+      postStart:
+        exec:
+          command: ["/bin/sh", "-c", "apk update && apk add strace"]
+  volumes:
+  - name: logspace
+    emptyDir:
+      sizeLimit: 16Mi
