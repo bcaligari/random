@@ -1,8 +1,8 @@
-== Mem Eater ==
+## Mem Eater
 
 Silly little program to allocate memory until something happens.
 
-=== Usage ===
+### Usage
 
 `%s [-i secs] [-s bytes] [-c count] [-f logfile]`
 
@@ -22,20 +22,20 @@ $ ./memeater -i 1 -s $((2*1024*1024))
 ...
 ```
 
-==== Binaries ====
+#### Binaries
 
 * `memeater` - ordinary binary
 * `memeater-static` - statically built version of `memeater`.
 * `bcaligari/memeater` - docker container image of `memeater-static`.
 
-==== Parameters ====
+#### Parameters
 
 * `-i secs` - seconds to wait after each `malloc(3)` / `memset(3)`.
 * `-s bytes` - size of `malloc`.
 * `-c count` - number of iterations before `pause(2)`. -1 (default) for infinite.
 * `-f logfile` - log file to write to.
 
-=== Running as a K8s Pod ===
+### Running as a K8s Pod
 
 * Use [or start with] the included manifest.
     * `kubectl create -f k8s-manifest.yaml`
@@ -50,14 +50,14 @@ $ ./memeater -i 1 -s $((2*1024*1024))
         * `tail -f /opt/memeater/log/memeater.log`
         * `strace -p <pid>`
 
-=== Build Options ===
+### Build Options
 
 * `make memeater` - build an ordinary binary.
 * `make memeater-static` - build memeater as a static binary.
 * `make container` - build a docker image from memeater-static.
 * `docker push bcaligari/memeater` - push container to Docker Hub.
 
-=== TODO ===
+### TODO
 
 * Code cleanup.
 * Generalise container & k8s manifest building.
