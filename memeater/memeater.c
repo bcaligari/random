@@ -6,14 +6,13 @@
 #include <errno.h>
 #include <assert.h>
 
-// These values are arbitrary af
-#define BS_MAX		256*1024*1024
-#define BS_DEF		32*1024*1024
+#define BS_MAX			256*1024*1024
+#define BS_DEF			32*1024*1024
 #define INTERVAL_MAX	3600
 #define INTERVAL_DEF	5
-#define ITER_MAX	2600
-#define ITER_DEF	-1
-#define FNAME_MAX	64
+#define ITER_MAX		2600
+#define ITER_DEF		-1
+#define FNAME_MAX		64
 
 int meat(int bs, int interval, int iterations, const char *logfile);
 
@@ -24,7 +23,6 @@ int main(int argc, char *argv[])
 	char logfile[FNAME_MAX];
 
 	assert(FNAME_MAX <= FILENAME_MAX);
-
 	iterations = (long) ITER_DEF;
 	interval = (long) INTERVAL_DEF;
 	bs = (long) BS_DEF;
@@ -33,9 +31,9 @@ int main(int argc, char *argv[])
 	while ((opt = getopt(argc, argv, "i:s:c:f:")) != -1) {
 		switch (opt) {
 		case 'c':
-		 	errno = 0;
+			errno = 0;
 			iterations = strtol(optarg, NULL, 10);
-			if (errno != 0)
+			if ((errno != 0) || (iterations < -1) || (iterations > ITER_MAX))
 				parse_broken = 1;
 			break;
 		case 'f':
@@ -44,31 +42,22 @@ int main(int argc, char *argv[])
 			else
 				strcpy(logfile, optarg);
 			break;
- 		case 's':
-		 	errno = 0;
+		case 's':
+			errno = 0;
 			bs = strtol(optarg, NULL, 10);
-			if (errno != 0)
+			if ((errno != 0)  || (bs <= 0) || (bs > BS_MAX))
 				parse_broken = 1;
 			break;
- 		case 'i':
+		case 'i':
 			errno = 0;
 			interval = strtol(optarg, NULL, 10);
-			if (errno != 0)
+			if ((errno != 0) || (interval < 0) || (interval > INTERVAL_MAX))
 				parse_broken = 1;
 			break;
 		default:
 			parse_broken = 1;
- 		}
+		}
 	}
-
-	if ((bs <= 0) || (bs > BS_MAX))
-		parse_broken = 1;
-
-	if ((iterations < -1) || (iterations > ITER_MAX))
-		parse_broken = 1;
-
-	if ((interval < 0) || (interval > INTERVAL_MAX))
-		parse_broken = 1;
 
 	if (parse_broken) {
 		fprintf(stderr, "Usage: %s [-i secs] [-s bytes] [-c count] [-f logfile]\n", argv[0]);
@@ -117,15 +106,16 @@ int meat(int bs, int interval, int iterations, const char *logfile)
 		fflush(NULL);
 		ptr = malloc((size_t) bs);
 		if (ptr != NULL)
-       			memset(ptr, 0, bs);
+			memset(ptr, 0, bs);
 		else {
 			sprintf(s, "%d: malloc(3) failed: %s (%d)\n",
 				(int) getpid(),
 				strerror(errno),
 				errno);
 			fputs(s, stdout);
-				if (f != NULL)
-					fputs(s, f);
+			if (f != NULL)
+				fputs(s, f);
+			break;
 		}
 		sleep(interval);
 	}
