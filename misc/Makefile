@@ -28,7 +28,7 @@ memeater : memeater.c
 clone-pid-tid : clone-pid-tid.c
 	$(CC) $(CFLAGS) -o clone-pid-tid clone-pid-tid.c
 
-clone-pid-tid : getuid.c
+getuid : getuid.c
 	$(CC) $(CFLAGS) -o getuid getuid.c
 
 clean :
