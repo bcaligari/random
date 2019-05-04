@@ -25,12 +25,15 @@ reader : reader.c
 memeater : memeater.c
 	$(CC) $(CFLAGS) -o memeater memeater.c
 
-clone : clone.c
-	$(CC) $(CFLAGS) -o clone clone.c
+clone-pid-tid : clone-pid-tid.c
+	$(CC) $(CFLAGS) -o clone-pid-tid clone-pid-tid.c
+
+clone-pid-tid : getuid.c
+	$(CC) $(CFLAGS) -o getuid getuid.c
 
 clean :
 	rm -f *.o core.* \
 	orphaniser zombiemaker forkbomber segfaulter \
-	clone \
+	clone-pid-tid getuid \
 	writer reader \
 	memeater
