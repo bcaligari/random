@@ -30,26 +30,26 @@
 
 int main(void)
 {
-	uid_t uid;
-	gid_t gid;
-	struct passwd *pw;
-	struct group *gr;
+	uid_t uid, euid;
+	gid_t gid, egid;
+	struct passwd *pw, *epw;
+	struct group *gr, *egr;
 
 	uid = getuid();
 	pw = getpwuid(uid);
 	printf("uid = %d (%s)\n", (int) uid, pw ? pw->pw_name : UNKNOWN);
 
-	uid = geteuid();
-	pw = getpwuid(uid);
-	printf("euid = %d (%s)\n", (int) uid, pw ? pw->pw_name : UNKNOWN);
+	euid = geteuid();
+	epw = getpwuid(euid);
+	printf("euid = %d (%s)\n", (int) euid, pw ? epw->pw_name : UNKNOWN);
 
 	gid = getgid();
 	gr = getgrgid(gid);
 	printf("gid = %d (%s)\n", (int) gid, gr ? gr->gr_name : UNKNOWN);
 
-	gid = getegid();
-	gr = getgrgid(gid);
-	printf("egid = %d (%s)\n", (int) gid, gr ? gr->gr_name : UNKNOWN);
+	egid = getegid();
+	egr = getgrgid(egid);
+	printf("egid = %d (%s)\n", (int) egid, egr ? egr->gr_name : UNKNOWN);
 
 	return 0;
 }
