@@ -1,35 +1,55 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
-//#include <pwd.h>
-//#include <grp.h>
+#include <pwd.h>
+#include <grp.h>
+
+#define UNKNOWN		"???"
 
 /*
-	# chown someusr:somgrp ./getuid
-	# chmod u+s ./getuid
-	# chmod g+s ./getuid
-	$ ./getuid
+	getpwuid etc return a ptr to a struct allocated from some
+	internal buffer and doesn't need to be manually freed
+
+	sudo configuration:
+		sysop  ALL=(elsebody:players) NOPASSWD: ALL
+
+	$ make getuid
+	gcc -g -Wall -Wextra -o getuid getuid.c
+
+	$ chmod u+s,g+s getuid
+
+	$ id
+	uid=1000(sysop) gid=100(users) groups=100(users),458(docker),461(vboxusers)
+
+	$ sudo -u elsebody -g players ./getuid
+	uid = 1001 (elsebody)
+	euid = 1000 (sysop)
+	gid = 1000 (players)
+	egid = 100 (users)
 */
 
 int main(void)
 {
-	uid_t uid, euid;
-	gid_t gid, egid;
-
-	/* TODO - add id to name translation
-	struct passwd user, euser;
-	struct group grp, egrp;
-	*/
+	uid_t uid;
+	gid_t gid;
+	struct passwd *pw;
+	struct group *gr;
 
 	uid = getuid();
-	euid = geteuid();
-	gid = getgid();
-	egid = getegid();
+	pw = getpwuid(uid);
+	printf("uid = %d (%s)\n", (int) uid, pw ? pw->pw_name : UNKNOWN);
 
-	printf("uid = %d ()\n", (int) uid);
-	printf("euid = %d ()\n", (int) euid);
-	printf("gid = %d ()\n", (int) gid);
-	printf("egid = %d ()\n", (int) egid);
+	uid = geteuid();
+	pw = getpwuid(uid);
+	printf("euid = %d (%s)\n", (int) uid, pw ? pw->pw_name : UNKNOWN);
+
+	gid = getgid();
+	gr = getgrgid(gid);
+	printf("gid = %d (%s)\n", (int) gid, gr ? gr->gr_name : UNKNOWN);
+
+	gid = getegid();
+	gr = getgrgid(gid);
+	printf("egid = %d (%s)\n", (int) gid, gr ? gr->gr_name : UNKNOWN);
+
 	return 0;
 }
-
