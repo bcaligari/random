@@ -16,11 +16,11 @@ forkbomber : forkbomber.c
 segfaulter : segfaulter.c
 	$(CC) $(CFLAGS) -o segfaulter segfaulter.c
 
-writer : writer.c
-	$(CC) $(CFLAGS) -o writer writer.c
+writer-write2 : writer-write2.c
+	$(CC) $(CFLAGS) -o writer-write2 writer-write2.c
 
-reader : reader.c
-	$(CC) $(CFLAGS) -o reader reader.c
+writer-fputs3 : writer-fputs3.c
+	$(CC) $(CFLAGS) -o writer-fputs3 writer-fputs3.c
 
 memeater : memeater.c
 	$(CC) $(CFLAGS) -o memeater memeater.c
