@@ -28,6 +28,7 @@ int main(void)
         mapping_size / 1024,
         mapping_size / (1024 * 1024),
         filename);
+
     // we do not explicitly munmap() because we don't care
     for (int i = 0; i < 666; i++) {
         if (mmap(NULL, mapping_size, PROT_READ, MAP_PRIVATE, fd, 0) == MAP_FAILED) {
@@ -36,7 +37,7 @@ int main(void)
 		    exit(EXIT_FAILURE);
         }
         total += (int)mapping_size;
-        printf("%8ldM  (%d * %d)\n", total / (1024 * 1024), i, (int)mapping_size );
+        printf("%8ldM  [%5d]\n", total / (1024 * 1024), i);
     }
 
     close(fd);
