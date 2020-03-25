@@ -22,7 +22,7 @@ int main(void)
 		exit(EXIT_FAILURE);
     }
 
-    printf("We limit virutal memory (in kbytes) with 'ulimit -v <somethign>'\n");
+    printf("We limit virutal memory (in kbytes) with 'ulimit -v <something>'\n");
     printf("mmap()ing lengths of %d == %dK == %dM from %s\n",
         mapping_size,
         mapping_size / 1024,
