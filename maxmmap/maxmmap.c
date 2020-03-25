@@ -36,7 +36,7 @@ int main(void)
 		    exit(EXIT_FAILURE);
         }
         total += (int)mapping_size;
-        printf("%8ldM  (%d * %d)\n", total / (1024 * 1024), i, (int)mapping_size );
+        printf("%8ldM  [%5d]\n", total / (1024 * 1024), i);
     }
 
     close(fd);
