@@ -108,10 +108,11 @@ int meat(int bs, int interval, int iterations, const char *logfile)
 		if (ptr != NULL)
 			memset(ptr, 0, bs);
 		else {
+			int errsv = errno;
 			sprintf(s, "%d: malloc(3) failed: %s (%d)\n",
 				(int) getpid(),
-				strerror(errno),
-				errno);
+				strerror(errsv),
+				errsv);
 			fputs(s, stdout);
 			if (f != NULL)
 				fputs(s, f);
