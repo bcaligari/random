@@ -8,9 +8,23 @@
 * `./misc/segfaulter` - segfaults
 * `./misc/clone-pid-tid` - clone(2) a thread and wait for it to finish
 * `./misc/getuid` - prints uid, euid, gid, egid
-* `./memeater/*` - eats memory - binary, static, container, k8s pod
 
-## Notes
+### `./memeater/*`
+
+* eats memory - binary, static, container, k8s pod
+* Test Kubernetes Pod memorylimits
+
+### `./misc/writer-write2.c`
+
+* `write(2)` to a file in a loop
+* Test mount behaviour of NFS volumes
+
+### `./maxmmap/maxmmap.c`
+
+* `mmap(2)` until process falls over
+* Needed by colleague
+
+## Misc
 
 ### Generating core dumpfiles
 * `$ ulimit -c unlimited`
