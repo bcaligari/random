@@ -3,38 +3,46 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <string.h>
 
-#define FILENAME    "/srv/cluster-nfs/tmp/test.txt"
 #define INTERVAL    1
-#define MAX_LINES   1000
 #define MAX_BUF     1024
+#define MAX_LINES   2^16
 
-int main(void)
+int main(int argc, char *argv[])
 {
     int i;
     int fd;
-    size_t str_len, written;
-    ssize_t ws;
+    ssize_t written, ws;
+    size_t str_len;
     char str_buf[MAX_BUF];
+    char hostname[MAX_BUF];
+    char filepath[MAX_BUF];
 
-    if ((fd = open(FILENAME, O_WRONLY|O_CREAT|O_TRUNC|O_SYNC, (mode_t) 0666)) == -1) {
+    if (argc != 2) {
+        printf("Usage %s <filename>\n", argv[0]);
+        exit(1);
+    }
+
+    printf("Writing to: %s\n", argv[1]);
+
+    if ((fd = open(argv[1], O_WRONLY|O_CREAT|O_TRUNC|O_SYNC, (mode_t) 0666)) == -1) {
         perror("open(2)");
         return 1;
     }
+
     for (i = 0; i < MAX_LINES; i++) {
         printf("Writing sequence %d\n", i);
-        sprintf(str_buf, "%255d\n", i);
+        sprintf(str_buf, "%d\n", i);
         str_len = strlen(str_buf);
-        written = 0;
-        while (written < str_len) {
-            ws = write(fd, str_buf + written, str_len - written);
-            if (ws == -1) {
-                perror("write(2)");
-                break;
-            }
-            written += ws;
+        ws = write(fd, str_buf, str_len);
+        if (ws == -1) {
+           perror("write(2)");
+           exit(1);
         }
+        if (ws != (ssize_t) str_len)
+            printf("Wrote %d instead of %d ... LOL\n", (int) ws, (int) str_len);
         sleep(INTERVAL);
     }
     close(fd);
