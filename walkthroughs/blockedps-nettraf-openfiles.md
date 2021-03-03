@@ -2,9 +2,9 @@
 
 ## Processes in uninterruptible sleep
 
-The load average is the average sum of runnable, running, and uninterruptable
+The load average is the average sum of runnable, running, and uninterruptible
 sleep tasks over the past 1, 5, and 15 minutes.  Therefore, every task in
-in uninterruptable sleep is adding 1 to the load average.
+in uninterruptible sleep is adding 1 to the load average.
 
 ### Checking the load average
 
@@ -26,7 +26,7 @@ ps -eo pid,stat,comm | awk '$2 ~ "^D" {print}'
 ps -eo pid,stat,%cpu,%mem,args --forest
 ```
 
-### Dumping tasks in uninterruptable state
+### Dumping tasks in uninterruptible state
 
 This output should persist in systemd journal.
 
@@ -78,11 +78,11 @@ Check for traffic against a local TCP port
 tcpdump -i eth1 -n tcp port 3260
 ```
 
-## Open \[but possibly deleted \] files
+## Open \[but possibly deleted\] files
 
 * `lsof` - list open files
   * Lists files by the *link* used to open the file.  As in UNIX, on Linux
-    there may be more than one link pointing to a single inode.
+    there may be more than one link \(filename\) pointing to a single inode.
   * Therefore the same file may have been opened using different names.
   * If the opening link has been deleted the filename will be suffixed
     with `(deleted)`.
