@@ -23,7 +23,7 @@ ps -eo pid,stat,comm | awk '$2 ~ "^D" {print}'
 ```
 
 ```{text}
-ps -eo pid,stat,%cpu,%mem,args --forest
+ps -eo pid,stat,wchan:24,%cpu,%mem,args --forest
 ```
 
 ### Dumping tasks in uninterruptible state
